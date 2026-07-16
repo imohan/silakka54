@@ -5,77 +5,134 @@
  */
 
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/ext_power.h>
-#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/keys.h>
 
 / {
+    behaviors {
+        longPress: longPress {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LONGPRESS";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <350>;
+            flavor = "tap-preferred";
+        };
+
+        HMShiftR: HMShiftR {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HMSHIFTR";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            hold-while-undecided;
+            hold-trigger-key-positions = <52 5 4 3 2 1 0 12 13 14 15 16 17 29 28 27 26 25 24 36 37 38 39 40 41 51 50 0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38 39 40 41 50 51 52 26 28 29 38 39 40 41 50 51 52>;
+            hold-trigger-on-release;
+        };
+
+        HMShiftL: HMShiftL {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HMSHIFTL";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            hold-while-undecided;
+            hold-trigger-on-release;
+            hold-trigger-key-positions = <6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 44 45 46 47 48 49 55 56 57>;
+        };
+
+        HMR: HMR {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HMR";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            hold-while-undecided;
+            hold-trigger-key-positions = <52 5 4 3 2 1 0 12 13 14 15 16 17 29 28 27 26 25 24 36 37 38 39 40 41 51 50 0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38 39 40 41 50 51 52 26 28 29 38 39 40 41 50 51 52>;
+            hold-trigger-on-release;
+            flavor = "tap-preferred";
+        };
+
+        HML: HML {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HML";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            hold-while-undecided;
+            hold-trigger-on-release;
+            hold-trigger-key-positions = <6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 44 45 46 47 48 49 55 56 57>;
+            flavor = "tap-preferred";
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
-// ------------------------------------------------------------------------------------------------------------
-// |  ESC  |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |   `   |
-// |  TAB  |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   |   -   |
-// |  CTRL |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |   '   |
-// | SHIFT |  Z  |  X  |  C   |  V   |  B   |  n/a   |  |  n/a  |  N   |  M    |  ,    |  .   |   /   | SHIFT |
-//                     | GUI  | LOWER| SPACE|  n/a   |  |  n/a  | ENTER| RAISE | BSPC  |
-// Note: Silakka54 has 54 keys - the 4 positions marked n/a are not present (inner thumb + encoder positions)
+            // ------------------------------------------------------------------------------------------------------------
+            // |  ESC  |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |   `   |
+            // |  TAB  |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   |   -   |
+            // |  CTRL |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |   '   |
+            // | SHIFT |  Z  |  X  |  C   |  V   |  B   |  n/a   |  |  n/a  |  N   |  M    |  ,    |  .   |   /   | SHIFT |
+            //                     | GUI  | LOWER| SPACE|  n/a   |  |  n/a  | ENTER| RAISE | BSPC  |
+            // Note: Silakka54 has 54 keys - the 4 positions marked n/a are not present (inner thumb + encoder positions)
+
             display-name = "Base";
             bindings = <
-&kp ESC   &kp N1 &kp N2 &kp N3   &kp N4 &kp N5                     &kp N6  &kp N7   &kp N8    &kp N9  &kp N0   &kp GRAVE
-&kp TAB   &kp Q  &kp W  &kp E    &kp R  &kp T                      &kp Y   &kp U    &kp I     &kp O   &kp P    &kp MINUS
-&kp LCTRL &kp A  &kp S  &kp D    &kp F  &kp G                      &kp H   &kp J    &kp K     &kp L   &kp SEMI &kp SQT
-&kp LSHFT &kp Z  &kp X  &kp C    &kp V  &kp B  &none     &none     &kp N   &kp M    &kp COMMA &kp DOT &kp FSLH &kp RSHFT
-                        &kp LGUI &mo 1  &kp SPACE &none  &none     &kp RET &mo 2    &kp BSPC
+&kp ESC    &kp N1        &kp N2           &kp N3               &kp N4                  &kp N5                     &kp N6     &kp N7                   &kp N8                &kp N9            &kp N0    &kp LEFT_BRACKET
+&kp TAB    &kp Q         &kp W            &kp E                &kp R                   &kp T                      &kp Y      &kp U                    &kp I                 &kp O             &kp P     &kp RIGHT_BRACKET
+&kp MINUS  &HML LCTRL A  &HML LEFT_ALT S  &HML LEFT_COMMAND D  &HMShiftL LEFT_SHIFT F  &kp G                      &kp H      &HMShiftR RIGHT_SHIFT J  &HMR RIGHT_COMMAND K  &HMR RIGHT_ALT L  &kp SEMI  &kp SQT
+&kp EQUAL  &kp Z         &kp X            &kp C                &kp V                   &kp B      &none    &none  &kp N      &kp M                    &kp COMMA             &kp DOT           &kp FSLH  &kp BACKSLASH
+                                          &mo 1                &kp DELETE              &kp ENTER  &none    &none  &kp SPACE  &kp BACKSPACE            &mo 2
             >;
         };
 
         lower_layer {
-// ------------------------------------------------------------------------------------------------------------
-// | BTCLR | BT1 | BT2 |  BT3 |  BT4 |  BT5 |                   | USB  | BLE   |       |      |       |BTCLRALL|
-// |  F1   |  F2 |  F3 |  F4  |  F5  |  F6  |                   |  F7  |  F8   |  F9   |  F10 |  F11  |  F12  |
-// |   `   |  !  |  @  |  #   |  $   |  %   |                   |  ^   |  &    |  *    |  (   |   )   |   ~   |
-// |       |     |     |      |      |      |  n/a   |  |  n/a  |      |  _    |  +    |  {   |   }   |  "|"  |
-//                     |      |      |      |  n/a   |  |  n/a  |      |       |       |
+            // ------------------------------------------------------------------------------------------------------------
+            // | BTCLR | BT1 | BT2 |  BT3 |  BT4 |  BT5 |                   | USB  | BLE   |       |      |       |BTCLRALL|
+            // |  F1   |  F2 |  F3 |  F4  |  F5  |  F6  |                   |  F7  |  F8   |  F9   |  F10 |  F11  |  F12  |
+            // |   `   |  !  |  @  |  #   |  $   |  %   |                   |  ^   |  &    |  *    |  (   |   )   |   ~   |
+            // |       |     |     |      |      |      |  n/a   |  |  n/a  |      |  _    |  +    |  {   |   }   |  "|"  |
+            //                     |      |      |      |  n/a   |  |  n/a  |      |       |       |
+
             display-name = "Lower";
             bindings = <
-&bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4                 &out OUT_USB &out OUT_BLE &trans          &trans   &trans   &bt BT_CLR_ALL
-&kp F1     &kp F2       &kp F3       &kp F4       &kp F5       &kp F6                       &kp F7       &kp F8       &kp F9          &kp F10  &kp F11  &kp F12
-&kp GRAVE  &kp EXCL     &kp AT       &kp HASH     &kp DOLLAR   &kp PRCNT                    &kp CARET    &kp AMPS     &kp KP_MULTIPLY &kp LPAR &kp RPAR &kp TILDE
-&trans     &trans       &trans       &trans       &trans       &trans    &none     &none   &trans       &kp MINUS    &kp KP_PLUS     &kp LBRC &kp RBRC &kp PIPE
-                                     &trans       &trans       &trans    &none     &none   &trans       &trans       &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &bt BT_CLR      &bt BT_SEL 0  &bt BT_SEL 1       &bt BT_SEL 2     &bt BT_SEL 3  &bt BT_SEL 4
+&trans  &trans  &trans  &trans  &trans  &trans                  &bt BT_CLR_ALL  &trans        &kp UP_ARROW       &trans           &trans        &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans          &kp LEFT      &kp DOWN_ARROW     &kp RIGHT        &trans        &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &none    &none  &kp C_PLAY      &kp C_PAUSE   &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &trans        &trans
+                        &trans  &trans  &trans  &none    &none  &trans          &trans        &trans
             >;
         };
 
         raise_layer {
-// ------------------------------------------------------------------------------------------------------------
-// |       |     |     |      |      |      |                   |      |       |       |      |       |       |
-// |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |       |
-// |   F1  |  F2 |  F3 |  F4  |  F5  |  F6  |                   |      |   <-  |   v   |  ^   |  ->   |       |
-// |   F7  |  F8 |  F9 |  F10 |  F11 |  F12 |  n/a   |  |  n/a  |  +   |   -   |   =   |  [   |   ]   |   \   |
-//                     |      |      |      |  n/a   |  |  n/a  |      |       |       |
+            // ------------------------------------------------------------------------------------------------------------
+            // |       |     |     |      |      |      |                   |      |       |       |      |       |       |
+            // |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |       |
+            // |   F1  |  F2 |  F3 |  F4  |  F5  |  F6  |                   |      |   <-  |   v   |  ^   |  ->   |       |
+            // |   F7  |  F8 |  F9 |  F10 |  F11 |  F12 |  n/a   |  |  n/a  |  +   |   -   |   =   |  [   |   ]   |   \   |
+            //                     |      |      |      |  n/a   |  |  n/a  |      |       |       |
+
             display-name = "Raise";
             bindings = <
-&trans    &trans &trans &trans  &trans  &trans                       &trans      &trans    &trans    &trans   &trans    &trans
-&kp GRAVE &kp N1 &kp N2 &kp N3  &kp N4  &kp N5                       &kp N6      &kp N7    &kp N8    &kp N9   &kp N0    &trans
-&kp F1    &kp F2 &kp F3 &kp F4  &kp F5  &kp F6                       &trans      &kp LEFT  &kp DOWN  &kp UP   &kp RIGHT &trans
-&kp F7    &kp F8 &kp F9 &kp F10 &kp F11 &kp F12   &none     &none    &kp KP_PLUS &kp MINUS &kp EQUAL &kp LBKT &kp RBKT  &kp BSLH
-                        &trans  &trans  &trans    &none     &none    &trans      &trans    &trans
+&trans             &trans       &trans          &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&kp GRAVE          &trans       &trans          &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&kp TILDE          &trans       &trans          &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&kp K_SCREENSAVER  &kp K_SLEEP  &kp C_SNAPSHOT  &trans  &trans  &trans  &none    &none  &trans  &trans  &trans  &trans  &trans  &trans
+                                                &trans  &trans  &trans  &none    &none  &trans  &trans  &trans
             >;
         };
 
-        extra_1 {
-            status = "reserved";
-        };
+        extra_1 { status = "reserved"; };
 
-        extra_2 {
-            status = "reserved";
-        };
+        extra_2 { status = "reserved"; };
 
-        extra_3 {
-            status = "reserved";
-        };
+        extra_3 { status = "reserved"; };
     };
 };
